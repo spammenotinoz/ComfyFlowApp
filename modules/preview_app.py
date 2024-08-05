@@ -59,11 +59,6 @@ def enter_app_ui(app):
         status = app.status
         logger.info(f"enter app {name}, status: {status}")
 
-        with page.stylable_button_container():
-            header_row = row([0.85, 0.15], vertical_align="top")
-            header_row.title(f"{name}")
-            header_row.button("My Apps", help="Back to your apps", key='enter_back_apps', on_click=on_back_apps)
-
         if not check_comfyui_alive():
             logger.warning("ComfyUI server is not alive, please check it")
             st.error(f"Enter app {name} failed, ComfyUI server is not alive")

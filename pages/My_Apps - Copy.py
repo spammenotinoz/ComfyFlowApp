@@ -7,27 +7,16 @@ from streamlit_extras.row import row
 from streamlit_extras.switch_page_button import switch_page
 from modules import AppStatus, check_comfyui_alive
 from modules.preview_app import enter_app_ui
-from modules.authenticate import MyAuthenticate  # Import your authentication class
-
-# Ensure this is called first if this script needs to set the page configuration
-# st.set_page_config(page_title="My App", layout="wide")
-
-# Initialize the authenticator
-authenticator = MyAuthenticate(cookie_name='UltimateAI_Image_Gen', key='sfdsfdsfdsfdssgffhhdfsfsfsfsfs')
-
-# Redirect to the login form if the user is not authenticated
-if not st.session_state.get('authentication_status', False):
-    st.warning("Please log in to access this page.")
-    authenticator.login(form_name="Login")
-    st.stop()  # Stop the current script execution here if the user needs to login
 
 def uninstall_app(app):
     logger.info(f"uninstall app {app.name}")
     get_workspace_model().update_app_uninstall(app.name)
 
+
 def enter_app(app):
     logger.info(f"enter app {app.name}")
     st.session_state["enter_app"] = app
+
 
 def create_app_info_ui(app):
     app_row = row([1, 5.4, 1.2, 1.4, 1], vertical_align="bottom")
@@ -53,8 +42,7 @@ def create_app_info_ui(app):
     if enter_button:
         logger.info(f"enter app {app.name}")
 
-# Ensure `page_init` is called somewhere after the first Streamlit command if it contains Streamlit API calls
-#page.page_init()
+page.page_init()
 
 with st.container():
     
