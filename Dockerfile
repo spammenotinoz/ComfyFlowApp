@@ -13,11 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy the requirements file into the container
 COPY requirements.txt .
 
-# Create a virtual environment and install dependencies
-RUN python -m venv venv \
-    && . venv/bin/activate \
-    && pip install --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the current directory contents into the container at /app
 COPY . .
@@ -26,5 +23,8 @@ COPY . .
 RUN useradd -m myuser
 USER myuser
 
-# Activate the virtual environment and set the command to run the application
-CMD ["sh", "-c", ". venv/bin/activate && streamlit run Home.py"]
+# Expose the port Streamlit runs on
+EXPOSE 8501
+
+# Set the command to run the application
+CMD ["streamlit", "run", "/app/Home.py"]
