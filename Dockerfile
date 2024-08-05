@@ -27,4 +27,4 @@ RUN useradd -m myuser
 USER myuser
 
 # Activate the virtual environment and set the command to run the application
-CMD ["sh", "-c", ". venv/bin/activate && streamlit run home.py"]
+CMD ["sh", "-c", ". venv/bin/activate && streamlit run Home.py"]
