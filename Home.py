@@ -1,4 +1,6 @@
 import streamlit as st
+from streamlit.runtime.scriptrunner import RerunData, RerunException
+from streamlit.source_util import get_pages
 import requests
 import os
 from loguru import logger
@@ -8,7 +10,6 @@ from modules import page
 from modules.authenticate import MyAuthenticate
 from modules.authenticate import Validator
 
-
 def gen_invite_code(source: str, uid: str):
     invate_code = f"oauth_{source}_{uid}"
     return invate_code
@@ -16,6 +17,17 @@ def gen_invite_code(source: str, uid: str):
 def back_home_signup():
     st.session_state.pop('user_data', None)
     logger.info("back home login")
+
+def redirect_to_my_apps():
+    pages = get_pages("home.py")  # Use the path to your main script
+    for page_hash, page_config in pages.items():
+        if page_config["page_name"] == "My_Apps":
+            raise RerunException(
+                RerunData(
+                    page_script_hash=page_hash,
+                    page_name=page_config["page_name"],
+                )
+            )
 
 page.init_env_default()
 page.page_init(layout="centered")
@@ -27,22 +39,25 @@ with st.container():
     """)
     header_button = header_row.empty()  
 
-    auth_instance =  MyAuthenticate("comfyflow_token", "ComfyFlowApp： Load ComfyUI workflow as webapp in seconds.")
-    if not st.session_state['authentication_status']:
-        
+    auth_instance = MyAuthenticate("comfyflow_token", "ComfyFlowApp： Load ComfyUI workflow as webapp in seconds.")
+    
+    if not st.session_state.get('authentication_status'):
         with st.container():
             try:
                 st.markdown("Image Generation")
                 auth_instance.login("Login")
             except Exception as e:  
                 st.error(f"Login failed, {e}")
-        
     else: 
         with header_button:
             auth_instance.logout(button_name="Logout", location="main", key="home_logout_button")
-
         
         with st.container():
             name = st.session_state['name']
             username = st.session_state['username']
-            st.markdown(f"Hello, {name}({username}) :smile:")         
+            st.markdown(f"Hello, {name}({username}) :smile:")
+        
+        # Check for the query parameter after successful login
+        params = st.experimental_get_query_params()
+        if "page" in params and params["page"][0] == "my_apps":
+            redirect_to_my_apps()
