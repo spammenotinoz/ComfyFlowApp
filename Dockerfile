@@ -20,11 +20,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Create a non-root user and switch to it
-RUN useradd -m myuser
-USER myuser
+#RUN useradd -m myuser
+#USER myuser
 
 # Expose the port Streamlit runs on
 EXPOSE 8501
 
 # Set the command to run the application
-CMD ["streamlit", "run", "/app/Home.py"]
+CMD ["streamlit", "run", "Home.py"]
