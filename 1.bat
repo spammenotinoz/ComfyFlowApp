@@ -1,0 +1,4 @@
+comfyflowapp_env\Scripts\activate
+set PUBLIC_SUPABASE_URL=https://anrakdaroezxddxvdpaw.supabase.co
+set PUBLIC_SUPABOSE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFucmFrZGFyb2V6eGRkeHZkcGF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDc5NjIzNTEsImV4cCI6MjAyMzUzODM1MX0.zLZm6AI7gfZlzkseKNQNC6Ek_eDhruR6gnzl1Otk1F8
+"./bin/creator_run.bat"
