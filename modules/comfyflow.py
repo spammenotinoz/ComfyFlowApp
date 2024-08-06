@@ -300,5 +300,5 @@ class Comfyflow:
                 else:
                     output_image = Image.open('./public/images/output-none.png')
                     logger.info("default output")
-                    img_placeholder.image(output_image, use_column_width=True, caption='None Image, Generate it!')
+                    img_placeholder.image(output_image, use_column_width=True, caption='No ImageYet, Please Generate One!')
                                 
